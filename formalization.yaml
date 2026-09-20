@@ -1,0 +1,206 @@
+version: "v0.4"
+
+project:
+  name: "Optimality of Gerver's sofa"
+  description: >-
+    A Lean 4 proof of Jineon Baek's theorem (arXiv:2411.19826) that Gerver's sofa solves the
+    moving sofa problem. A moving sofa is a nonempty closed connected set in the horizontal arm
+    of the closed L-shaped hallway of width one, together with a continuous path of plane
+    isometries, starting at the identity, that keeps the set inside the hallway and ends with it
+    in the vertical arm. The main theorem says that the supremum of the areas of moving sofas
+    equals the area of Gerver's sofa, which is defined as the intersection of the rotated and
+    translated hallways along Gerver's rotation path. The supremum is also proved to be finite,
+    at least 11/5 and attained. A second compared theorem says that Gerver's sofa is itself a
+    moving sofa, so the supremum is attained by it. A third says that Gerver's four equations
+    for the constants A, B, phi, theta have exactly one solution on a closed parameter domain.
+    Gerver's sofa is defined by choice from that solution, so the main theorem needs it. No classical
+    area theorem is assumed: the Green-type curve area identity and the Minkowski-type mixed
+    area facts that the paper quotes are proved here. The numerical input is a kernel-checked
+    integer interval certificate for the areas of Gerver's outer cap and niche. Formalizing the
+    paper turned up 11 errors and gaps in its proofs and 33 misprints, none of which affects
+    the main theorem. NOTES.md lists them with their repairs.
+  authors:
+    - "Dean Cureton"
+  responsible_maintainers:
+    - "Dean Cureton"
+  license: "Apache-2.0"
+
+classification:
+  arxiv: ["math.MG"]
+  msc2020: ["52A40", "52A10", "49Q10"]
+
+sources:
+  - title: "Optimality of Gerver's Sofa"
+    authors: ["Jineon Baek"]
+    id: "arXiv:2411.19826v1"
+    type: "paper"
+    relationship: "formalizes"
+    author_endorsement: "not-contacted"
+    note: >-
+      The paper whose proof is formalized. NOTES.md lists the 11 errors and gaps and the 33
+      misprints found in the paper, and the places where the Lean proof takes a different route.
+      Twenty of the paper's 286 numbered environments have no Lean
+      counterpart. None of the compared theorems depends on them, and NOTES.md lists them.
+  - title: "On moving a sofa around a corner"
+    authors: ["Joseph L. Gerver"]
+    id: "Geometriae Dedicata 42 (1992), 267-283"
+    type: "paper"
+    relationship: "adapts"
+    author_endorsement: "not-contacted"
+    note: >-
+      Introduces Gerver's sofa and its four constants.
+      MovingSofa.GerversSofa.ABφθSpec.existsUnique proves that the constants exist and are
+      unique on the closed domain 0 <= phi <= theta <= pi/4, 0 <= A, 0 <= B. Gerver uses strict
+      inequalities, and uniqueness on the larger domain is the stronger statement, so the
+      relationship is recorded as adapts. Clauses (iii) and (iv) of Gerver's Theorem 1, on
+      approximating his sofa by polygons, are not formalized.
+  - title: "Differential equations and exact solutions in the moving sofa problem"
+    authors: ["Dan Romik"]
+    id: "Experimental Mathematics 27 (2018), 316-330"
+    type: "paper"
+    relationship: "background"
+    author_endorsement: "not-contacted"
+    note: >-
+      Gives the four equations in the exact form, eqs. (1) to (4), that the Challenge
+      transcribes as ABφθSpec, and the published values of the constants. The transcription
+      was checked numerically against those values. Nobody has compared it with the printed
+      paper line by line; see NOTES.md.
+
+related_formalizations:
+  - id: "https://github.com/google-deepmind/formal-conjectures/tree/ddfbaf90f4482030d88aae5233fe933874296a23"
+    relationship: "adapts"
+    note: >-
+      The source of the statement; it contains no proof. MovingSofaSubmission/Challenge.lean
+      copies the moving sofa definitions and the three compared statements, unchanged, from
+      FormalConjectures/Wikipedia/MovingSofa.lean at this commit. Four things differ: the
+      plane notation and instances are inlined, the rigid-motion topology instance is given a
+      name, docstrings are added to the definitions that had none, and the sanity tests, metadata attributes and open shape-uniqueness conjecture of the
+      original file are left out. In formal-conjectures the
+      result is marked as claimed in the literature, not as formalized.
+  - id: "https://github.com/dawidmtrela-dotcom/GerverSofaLean/releases/tag/v1.1.0"
+    relationship: "builds-on"
+    note: >-
+      Dawid Trela's Lean development (MIT). Used here: its kernel-checked proof that Gerver's
+      constants exist and are unique, its proof that Gerver's sofa moves around the corner, and
+      its certified enclosures of the constants and of the transcendental functions.
+      MovingSofa/Canonical/GerverDefinitions.lean and MovingSofa/Gerver/Motion.lean adapt these
+      to the Challenge definitions. The v1.1.0 release archive is vendored in
+      vendor/gerver-sofa and built as a library of this package, because the v1.1.0 Git tag lacks the
+      Part F bridge. One proof was adjusted for the current Mathlib; no statement or definition
+      changed. It does not prove optimality.
+  - id: "https://github.com/rkirov/jordan_pick/tree/b3c9b7cf7358bf81a077d78ad67e6e8247869ddd"
+    relationship: "builds-on"
+    note: >-
+      The Jordan curve theorem, used here through MovingSofa.jordan_separation. Registered with
+      Palomar as PALOMAR-2026-08-19-000001.
+  - id: "https://github.com/Vilin97/lean-pool/tree/bb74ee07fc23bc81358d75a9c40303e5e27fced8"
+    relationship: "builds-on"
+    note: >-
+      Jonathan Ho's Brunn-Minkowski inequality with its Prekopa-Leindler prerequisites. It
+      keeps the area above the threshold along convex combinations of convex bodies. The three
+      files used are copied unchanged into vendor/lean-pool (Apache-2.0) and built as a library of
+      this package, because Lake records the package name lean-pool in the manifest as
+      «lean-pool», which Palomar's verifier rejects.
+  - id: "https://github.com/TauCetiProject/TauCeti/tree/c52a81811e4626d2e9769fe9b0c701168c211332"
+    relationship: "builds-on"
+    note: >-
+      A Jordan curve built from two arcs that meet only at their endpoints, the filled hull,
+      and lemmas on bounded variation. The ten files used are copied unchanged into
+      vendor/tauceti (Apache-2.0) and built as a library of this package, because at this commit Tau
+      Ceti pins a Mathlib revision for Lean v4.34.0-rc2 and this project uses Mathlib
+      v4.35.0-rc1.
+
+status:
+  scope: >-
+    The three theorems named in comparator.json are proved:
+    MovingSofa.GerversSofa.ABφθSpec.existsUnique (Gerver's four constants exist and are
+    unique), MovingSofa.isMovingSofa_gerversSofa (Gerver's sofa is a moving sofa) and
+    MovingSofa.sofaConstant_eq_volume_gerversSofa (the moving sofa constant equals the area of
+    Gerver's sofa). No proof has hypotheses beyond those stated in the Challenge. No
+    classical proposition is assumed, and the Green-type and Minkowski-type area facts that the
+    paper quotes are proved here. The counts below cover everything outside the vendored Gerver
+    certificate. The three sorries in MovingSofaSubmission/Challenge.lean are the holes that the
+    Solution fills, and are not counted.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  known_gaps: >-
+    The area of Gerver's sofa has no two-sided numerical bound. What is proved is
+    11/5 <= volume gerversSofa < infinity, from an interval certificate that gives
+    22007/10000. The value 2.2195316... comes from floating-point evaluation of the formulas
+    in the Challenge. Twenty of the paper's 286 numbered environments are not formalized, among them
+    clauses (iii) and (iv) of the quoted theorem thm:gerver and the proposition
+    pro:tangent-hallway. None of the compared theorems depends on any of them. See NOTES.md.
+
+automation:
+  methods:
+    - method: "agent"
+      framework: "Codex"
+      tool_setup: >-
+        OpenAI Codex agents (GPT-5.6) wrote a large share of the Lean proofs, in the first part
+        of the project. They worked from an informal dependency graph of the paper's statements, kept
+        in step with the Lean project by a workflow tool. A coordinating agent
+        assigned one statement at a time to prover subagents, and separate reviewer subagents,
+        each starting from a fresh context, reviewed every proof and checked its statement
+        against the paper. They also set up the repository and its dependencies.
+    - method: "agent"
+      framework: "Claude Code"
+      tool_setup: >-
+        Claude agents continued under the same workflow, with the same division into a
+        coordinator, prover subagents and fresh-context reviewer subagents. They wrote the rest
+        of the proofs, removed the classical area theorems that the proof had assumed until
+        then, ran the final audits, and prepared this repository.
+  notes: >-
+    AI agents wrote the proofs, with the work split between Codex and Claude Code. The
+    maintainer directed the work throughout. All builds and commits were run locally. No human
+    expert has reviewed the mathematics.
+
+fidelity:
+  divergences: >-
+    Compared with formal-conjectures: MovingSofaSubmission/Challenge.lean copies the formal-conjectures
+    definitions and both statements unchanged and imports only Mathlib. It inlines the plane
+    notation and instances, names the rigid-motion topology instance so that Comparator sees
+    the same name in Challenge and Solution, and leaves out the tests, metadata and open
+    shape-uniqueness conjecture found there. Compared with the paper: an AI review of the statement found the
+    following differences, none of which weakens the theorem. Sofas satisfy m 0 = id and start
+    inside the horizontal arm, where the paper allows any initial translation;
+    canonical_paper_motion_bridge proves that a sofa of either kind is a translate of one of
+    the other kind. Sofas are closed and connected, as in the paper's Definition 1.2, so the
+    theorem says nothing about disconnected sets. Motions lie in the full isometry group E(2),
+    where the paper uses SE(2); orientation preservation is proved. Boundedness and
+    measurability are not assumed; every moving sofa is proved compact. The supremum is taken
+    in the extended nonnegative reals and is proved finite, at least 11/5 and attained.
+    ABφθSpec uses non-strict inequalities, which makes uniqueness stronger than in the
+    literature. gerversSofa is an intersection of rotated hallways and is proved equal to the
+    paper's set (gerver_canonical_paper_literal). See NOTES.md.
+
+review:
+  status: "agent-reviewed"
+  reviewers:
+    - "Codex and Claude subagent reviewers (mathematical review of each proof, and statement checks against the paper)"
+    - "Claude subagent auditors (final audit, statement audit, whole-paper scope audit)"
+  notes: >-
+    No human expert has reviewed the mathematics, and this repository is not peer reviewed. AI
+    reviewers, each starting from a fresh context, reviewed every proof and checked its
+    statement against the paper. Three further AI audits were run: a final audit of the
+    repository, which passed with minor items; an audit of the statements of the main theorem and of
+    ABφθSpec.existsUnique against the paper, which found them correct with the differences
+    listed under fidelity; and a scope
+    audit of the whole paper, which found the 20 unformalized environments listed under
+    status.known_gaps.
+
+alignment:
+  namespace: "MovingSofa"
+  statements:
+    - source: "Gerver 1992, Theorem 2, in the four-equation form of Romik 2018 eqs. (1)-(4), on a closed parameter domain"
+      lean: "MovingSofa.GerversSofa.ABφθSpec.existsUnique"
+      module: "MovingSofa.Canonical.Definitions"
+      status: "proved"
+    - source: "Gerver 1992, Theorem 2: Gerver's sofa can be moved around the corner"
+      lean: "MovingSofa.isMovingSofa_gerversSofa"
+      module: "MovingSofa.Gerver.Motion"
+      status: "proved"
+    - source: "Baek, arXiv:2411.19826, Theorem 1.1"
+      lean: "MovingSofa.sofaConstant_eq_volume_gerversSofa"
+      module: "MovingSofaSubmission.Solution"
+      status: "proved"

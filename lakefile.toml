@@ -1,0 +1,41 @@
+name = "MovingSofa"
+defaultTargets = ["MovingSofa", "MovingSofaSubmission"]
+
+[[require]]
+name = "jordan_pick"
+git = "https://github.com/rkirov/jordan_pick.git"
+rev = "b3c9b7cf7358bf81a077d78ad67e6e8247869ddd"
+
+[[require]]
+name = "leancert"
+git = "https://github.com/alerad/leancert"
+rev = "571a228555ae38742448854be81d7b59d994a8e3"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.35.0-rc1"
+
+
+[[lean_lib]]
+name = "MovingSofa"
+
+[[lean_lib]]
+name = "MovingSofaSubmission"
+globs = ["MovingSofaSubmission.+"]
+
+# Vendored sources. They are libraries of this package, not path dependencies, so that their
+# build output goes to this package's `.lake`, the only directory Comparator lets a build write to.
+[[lean_lib]]
+name = "GerverSofa"
+srcDir = "vendor/gerver-sofa"
+
+[[lean_lib]]
+name = "LeanPool"
+srcDir = "vendor/lean-pool"
+leanOptions = { pp.unicode.fun = true, relaxedAutoImplicit = false, maxSynthPendingDepth = 3, weak.linter.mathlibStandardSet = true }
+
+[[lean_lib]]
+name = "TauCeti"
+srcDir = "vendor/tauceti"
+leanOptions = { weak.linter.mathlibStandardSet = true }

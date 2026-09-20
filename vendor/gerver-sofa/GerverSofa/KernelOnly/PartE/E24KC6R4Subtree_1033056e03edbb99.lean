@@ -1,0 +1,32 @@
+import GerverSofa.KernelOnly.PartE.E24KC2ProofHelpers
+
+/-! KC6R4 explicit terminal-certificate subtree. No adaptive search. -/
+noncomputable section
+
+namespace GerverSofa
+namespace PartE
+
+set_option maxRecDepth 1000000 in
+set_option maxHeartbeats 0 in
+theorem e24KC2ThetaAboveLeaf0000220021__c2 :
+    adaptiveCoverCheck 8 (childHL (childLH (childHL (childLL (childLL (childHL (childHL (childLL (childLL (childLL (childLL e24ThetaAboveRoot))))))))))) = true := by
+  exact adaptiveCoverCheck_succ_of_children 7 (childHL (childLH (childHL (childLL (childLL (childHL (childHL (childLL (childLL (childLL (childLL e24ThetaAboveRoot)))))))))))
+    (by
+      have h : ((childLL (childHL (childLH (childHL (childLL (childLL (childHL (childHL (childLL (childLL (childLL (childLL e24ThetaAboveRoot))))))))))))).rejected = true := by
+        decide +kernel
+      exact adaptiveCoverCheck_true_of_rejected 7 (childLL (childHL (childLH (childHL (childLL (childLL (childHL (childHL (childLL (childLL (childLL (childLL e24ThetaAboveRoot)))))))))))) h)
+    (by
+      have h : ((childLH (childHL (childLH (childHL (childLL (childLL (childHL (childHL (childLL (childLL (childLL (childLL e24ThetaAboveRoot))))))))))))).rejected = true := by
+        decide +kernel
+      exact adaptiveCoverCheck_true_of_rejected 7 (childLH (childHL (childLH (childHL (childLL (childLL (childHL (childHL (childLL (childLL (childLL (childLL e24ThetaAboveRoot)))))))))))) h)
+    (by
+      have h : ((childHL (childHL (childLH (childHL (childLL (childLL (childHL (childHL (childLL (childLL (childLL (childLL e24ThetaAboveRoot))))))))))))).rejected = true := by
+        decide +kernel
+      exact adaptiveCoverCheck_true_of_rejected 7 (childHL (childHL (childLH (childHL (childLL (childLL (childHL (childHL (childLL (childLL (childLL (childLL e24ThetaAboveRoot)))))))))))) h)
+    (by
+      have h : ((childHH (childHL (childLH (childHL (childLL (childLL (childHL (childHL (childLL (childLL (childLL (childLL e24ThetaAboveRoot))))))))))))).rejected = true := by
+        decide +kernel
+      exact adaptiveCoverCheck_true_of_rejected 7 (childHH (childHL (childLH (childHL (childLL (childLL (childHL (childHL (childLL (childLL (childLL (childLL e24ThetaAboveRoot)))))))))))) h)
+
+end PartE
+end GerverSofa

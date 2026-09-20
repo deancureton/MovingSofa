@@ -1,0 +1,16 @@
+{
+  "challenge_module": "MovingSofaSubmission.Challenge",
+  "solution_module": "MovingSofaSubmission.Solution",
+  "theorem_names": [
+    "MovingSofa.GerversSofa.ABφθSpec.existsUnique",
+    "MovingSofa.isMovingSofa_gerversSofa",
+    "MovingSofa.sofaConstant_eq_volume_gerversSofa"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}
