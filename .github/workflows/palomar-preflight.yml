@@ -13,8 +13,8 @@ jobs:
     uses: PalomarRegistry/PalomarSubmission/.github/workflows/submission.yml@3561d237dcc4b28482558ad28a64d767d7cc8615
     with:
       repository: ${{ github.repository }}
-      commit: cc1319a4a3525b5339eeb781f0fc96e3f2e4a9db
-      pipeline_commit: 3561d237dcc4b28482558ad28a64d767d7cc8615
-      request_id: preflight001
+      commit: c7ee068a6f085b3edafa73310835d5efaecff420
+      pipeline_commit: c7ee068a6f085b3edafa73310835d5efaecff420
+      request_id: preflight002
       mode: full
       options: '{"comparator_config_path":"comparator.json","authorization_relationship":"I am a responsible author or maintainer"}'
