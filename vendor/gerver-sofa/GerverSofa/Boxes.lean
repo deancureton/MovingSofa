@@ -1,0 +1,146 @@
+import GerverSofa.Systems
+import Aesop
+import Mathlib.Analysis.Real.Pi.Bounds
+
+/-!
+# Exact real boxes used by the Krawczyk certificates
+
+Every endpoint is written as an exact integer quotient.  There are no binary
+floating-point constants in these definitions.
+-/
+
+noncomputable section
+
+namespace GerverSofa
+
+def qR (n : Int) (d : Nat) : ℝ := (n : ℝ) / (d : ℝ)
+
+namespace Reduced
+
+/-- Input box `X_a × X_b × X_phi × X_theta`. -/
+def box : Set Params :=
+  {p |
+    qR 1888531216873 20000000000000 ≤ p.a ∧ p.a ≤ qR 4721328042183 50000000000000 ∧
+    qR 69960186366677 50000000000000 ≤ p.b ∧ p.b ≤ qR 34980093183339 25000000000000 ∧
+    qR 122429264969 3125000000000 ≤ p.phi ∧ p.phi ≤ qR 3917736479009 100000000000000 ∧
+    qR 2129067216821 3125000000000 ≤ p.theta ∧ p.theta ≤ qR 68130150938273 100000000000000}
+
+end Reduced
+
+namespace Romik
+
+/-- The direct 22-dimensional box `Y × Phi × Theta`. -/
+def box : Set Params :=
+  {p |
+    qR (-21032242207268875141628571849) 100000000000000000000000000000 ≤ p.k11 ∧ p.k11 ≤ qR (-21032242207268875141608571849) 100000000000000000000000000000 ∧
+    qR 2499999999999999999999 10000000000000000000000 ≤ p.k12 ∧ p.k12 ≤ qR 2500000000000000000001 10000000000000000000000 ∧
+    qR (-91917929277159332227479610289) 100000000000000000000000000000 ≤ p.k21 ∧ p.k21 ≤ qR (-91917929277159332227459610289) 100000000000000000000000000000 ∧
+    qR 29525413734425341573853797657 62500000000000000000000000000 ≤ p.k22 ∧ p.k22 ≤ qR 29525413734425341573866297657 62500000000000000000000000000 ∧
+    qR (-15344080735756291713875357283) 25000000000000000000000000000 ≤ p.k31 ∧ p.k31 ≤ qR (-15344080735756291713870357283) 25000000000000000000000000000 ∧
+    qR 17792529580064437214538861001 20000000000000000000000000000 ≤ p.k32 ∧ p.k32 ≤ qR 17792529580064437214542861001 20000000000000000000000000000 ∧
+    qR (-15417358304445500741761623987) 50000000000000000000000000000 ≤ p.k41 ∧ p.k41 ≤ qR (-15417358304445500741751623987) 50000000000000000000000000000 ∧
+    qR 29525413734425341573853797657 62500000000000000000000000000 ≤ p.k42 ∧ p.k42 ≤ qR 29525413734425341573866297657 62500000000000000000000000000 ∧
+    qR (-20344080735756291713874857283) 20000000000000000000000000000 ≤ p.k51 ∧ p.k51 ≤ qR (-20344080735756291713870857283) 20000000000000000000000000000 ∧
+    qR 2499999999999999999999 10000000000000000000000 ≤ p.k52 ∧ p.k52 ≤ qR 2500000000000000000001 10000000000000000000000 ∧
+    qR 2420644844145377502832171437 2000000000000000000000000000 ≤ p.a1 ∧ p.a1 ≤ qR 2420644844145377502832571437 2000000000000000000000000000 ∧
+    qR (-2500000000000000000001) 10000000000000000000000 ≤ p.a2 ∧ p.a2 ≤ qR (-2499999999999999999999) 10000000000000000000000 ∧
+    qR (-52762459802678462416060380937) 100000000000000000000000000000 ≤ p.b1 ∧ p.b1 ≤ qR (-52762459802678462416040380937) 100000000000000000000000000000 ∧
+    qR 92025838516063762289360579501 100000000000000000000000000000 ≤ p.b2 ∧ p.b2 ≤ qR 92025838516063762289380579501 100000000000000000000000000000 ∧
+    qR 313022761424232933776114655193 500000000000000000000000000000 ≤ p.c1 ∧ p.c1 ≤ qR 313022761424232933776214655193 500000000000000000000000000000 ∧
+    qR (-151160128631428920268654781) 160000000000000000000000000 ≤ p.c2 ∧ p.c2 ≤ qR (-151160128631428920268622781) 160000000000000000000000000 ∧
+    qR 1641278451780291167220080819 1250000000000000000000000000 ≤ p.d1 ∧ p.d1 ≤ qR 1641278451780291167220330819 1250000000000000000000000000 ∧
+    qR (-105076534082910887440587258861) 200000000000000000000000000000 ≤ p.d2 ∧ p.d2 ≤ qR (-105076534082910887440547258861) 200000000000000000000000000000 ∧
+    qR 2420644844145377502832171437 2000000000000000000000000000 ≤ p.e1 ∧ p.e1 ≤ qR 2420644844145377502832571437 2000000000000000000000000000 ∧
+    qR 2499999999999999999999 10000000000000000000000 ≤ p.e2 ∧ p.e2 ≤ qR 2500000000000000000001 10000000000000000000000 ∧
+    qR 1958868239504182093160893749 50000000000000000000000000000 ≤ p.phi ∧ p.phi ≤ qR 78354729580167283726435751 2000000000000000000000000000 ∧
+    qR 34065075469136244723692787727 50000000000000000000000000000 ≤ p.theta ∧ p.theta ≤ qR 34065075469136244723692787983 50000000000000000000000000000}
+
+end Romik
+end GerverSofa
+
+namespace GerverSofa.Romik
+
+/-- Every point in the certified direct-system box has a positive first
+switching angle. -/
+theorem phi_pos_of_mem_box {p : Params} (hp : p ∈ box) : 0 < p.phi := by
+  dsimp [box, qR] at hp
+  have hlo :
+      ((1958868239504182093160893749 : ℝ) /
+        50000000000000000000000000000) ≤ p.phi := by
+    aesop
+  have hpositive :
+      (0 : ℝ) <
+        ((1958868239504182093160893749 : ℝ) /
+          50000000000000000000000000000) := by
+    norm_num
+  exact lt_of_lt_of_le hpositive hlo
+
+/-- Equations (32)--(34), together with the certified box, force the exact
+initial path normalisation `x(0)=(0,0)`. -/
+theorem path_zero_of_mem_box_and_equations
+    {p : Params} (hp : p ∈ box) (heq : Equations p) :
+    path p 0 = (0, 0) := by
+  have hphi : 0 < p.phi := phi_pos_of_mem_box hp
+  have h5 := congrFun heq (5 : Fin 22)
+  have h6 := congrFun heq (6 : Fin 22)
+  have h7 := congrFun heq (7 : Fin 22)
+  simp [Equations, system] at h5 h6 h7
+  have h0phi : (0 : ℝ) ≤ p.phi := le_of_lt hphi
+  apply Prod.ext <;>
+    simp [path, h0phi, path1, rot, addK] <;>
+    linarith
+
+end GerverSofa.Romik
+
+namespace GerverSofa.Romik
+
+/-- The exact direct-system box orders the four physical switching times. -/
+theorem switchOrder_of_mem_box {p : Params} (hp : p ∈ box) : SwitchOrder p := by
+  dsimp [box, qR] at hp
+  have hphiLo :
+      ((1958868239504182093160893749 : ℝ) /
+        50000000000000000000000000000) ≤ p.phi := by
+    aesop
+  have hphiHi :
+      p.phi ≤ ((78354729580167283726435751 : ℝ) /
+        2000000000000000000000000000) := by
+    aesop
+  have hthetaLo :
+      ((34065075469136244723692787727 : ℝ) /
+        50000000000000000000000000000) ≤ p.theta := by
+    aesop
+  have hthetaHi :
+      p.theta ≤ ((34065075469136244723692787983 : ℝ) /
+        50000000000000000000000000000) := by
+    aesop
+  have hphiTheta : p.phi ≤ p.theta := by
+    norm_num at hphiHi hthetaLo
+    linarith
+  have hthetaEta : p.theta ≤ Real.pi / 2 - p.theta := by
+    norm_num at hthetaHi
+    nlinarith [Real.pi_gt_three]
+  exact
+    { phi_le_theta := hphiTheta
+      theta_le_eta := hthetaEta
+      eta_le_tau := by linarith }
+
+/-- The certified box and the positional equations discharge the path
+continuity field needed by the moving-sofa assembly. -/
+theorem continuous_path_of_mem_box_and_equations
+    {p : Params} (hp : p ∈ box) (heq : Equations p) :
+    Continuous (path p) :=
+  continuous_path_of_order_and_equations (switchOrder_of_mem_box hp) heq
+
+end GerverSofa.Romik
+
+namespace GerverSofa.Romik
+
+/-- The direct-system box supplies the strict lower bound on `a₁` used in the
+area proposition. -/
+theorem a1_lower_bound_of_mem_box {p : Params} (hp : p ∈ box) :
+    ((2420644844145377502832171437 : ℝ) /
+      2000000000000000000000000000) ≤ p.a1 := by
+  dsimp [box, qR] at hp
+  aesop
+
+end GerverSofa.Romik
